@@ -1,0 +1,41 @@
+this is pretty similar to subsets(#78) problem. Basically you have to apply pick and not pick approach on each index of the array (generate an array here as it has not been given 1-9). base cases are:
+1> target ==0 and ds size ==k { ds is the data structure u have taken to carry the selective aray indices}.
+2> ind==nums.size()  {i.e. u have taken a decision over every index of the given array}.
+
+CODE:
+
+class Solution {
+public:
+    //target=n
+    void solve(vector<int> &nums,int ind, int k, int target, vector<int> &ds, vector<vector<int>> &ans){
+        //base case
+        if(ds.size()==k){
+            if(target==0){
+                ans.push_back(ds);
+                return;
+            }
+        }
+        if(ind==nums.size()){
+            return ;
+        }
+        //pick
+        ds.push_back(nums[ind]);
+        solve(nums, ind+1, k, target-nums[ind], ds, ans);
+        //not pick
+        ds.pop_back();
+        solve(nums, ind+1, k, target, ds, ans);
+    }
+
+    vector<vector<int>> combinationSum3(int k, int n) {
+        //target=n
+        //generate the array nums
+        vector<int> nums;
+        for(int i=1;i<=9;i++){
+            nums.push_back(i);
+        }
+        vector<int> ds;
+        vector<vector<int>> ans;
+        solve(nums, 0, k, n, ds, ans);
+        return ans;
+    }
+};
